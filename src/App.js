@@ -20,7 +20,7 @@ const initialTodoList = [
 
 function App() {
   const [todoList, setTodoList] = useState(initialTodoList);
-  const [searchText, setSearchText] = useState('abc');
+  const [searchText, setSearchText] = useState('');
   const [searchStatus, setSearchStatus] = useState('');
 
   const createTodo = title => {

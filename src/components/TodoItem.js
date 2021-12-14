@@ -1,12 +1,17 @@
+import { useState } from 'react';
 import EditTodo from './EditTodo';
 
 function TodoItem(props) {
+  const [isEdit, setIsEdit] = useState(false);
+
   const handleClickDelete = () => {
     props.deleteTodo(props.todoItem.id);
   };
 
   const handleClickToggle = () => {
-    props.updateTodo(props.todoItem.id, { completed: !props.todoItem.completed });
+    props.updateTodo(props.todoItem.id, {
+      completed: !props.todoItem.completed
+    });
   };
 
   return (
@@ -15,16 +20,35 @@ function TodoItem(props) {
         props.todoItem.completed ? 'success' : 'warning'
       }`}
     >
-      {/* <EditTodo /> */}
-      <span>{props.todoItem.title}</span>
-      <div className="btn-group">
-        <button className="btn btn-info rounded-0" onClick={handleClickToggle}>
-          <i className={`fas fa-toggle-${props.todoItem.completed ? 'on' : 'off'}`} />
-        </button>
-        <button className="btn btn-danger rounded-0" onClick={handleClickDelete}>
-          <i className="far fa-trash-alt" />
-        </button>
-      </div>
+      {isEdit ? (
+        <EditTodo
+          closeEditForm={() => setIsEdit(false)}
+          todoItem={props.todoItem}
+          updateTodo={props.updateTodo}
+        />
+      ) : (
+        <>
+          <span onClick={() => setIsEdit(true)}>{props.todoItem.title}</span>
+          <div className="btn-group">
+            <button
+              className="btn btn-info rounded-0"
+              onClick={handleClickToggle}
+            >
+              <i
+                className={`fas fa-toggle-${
+                  props.todoItem.completed ? 'on' : 'off'
+                }`}
+              />
+            </button>
+            <button
+              className="btn btn-danger rounded-0"
+              onClick={handleClickDelete}
+            >
+              <i className="far fa-trash-alt" />
+            </button>
+          </div>
+        </>
+      )}
     </li>
   );
 }

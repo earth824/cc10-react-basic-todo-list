@@ -1,15 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 import AddTodo from './components/AddTodo';
 import RemainingMessage from './components/RemainingMessage';
 import SearchBar from './components/SearchBar';
 import TodoList from './components/TodoList';
 
-const initialTodoList = [
-  { id: uuidv4(), title: 'Watching a movie', completed: false },
-  { id: uuidv4(), title: 'Meeting a doctor', completed: false },
-  { id: uuidv4(), title: 'Dinner with my family', completed: true }
-];
+// const initialTodoList = [
+//   { id: uuidv4(), title: 'Watching a movie', completed: false },
+//   { id: uuidv4(), title: 'Meeting a doctor', completed: false },
+//   { id: uuidv4(), title: 'Dinner with my family', completed: true }
+// ];
 
 // const previousTodo = [a, b, c] // nextTodo = [d, a, b, c]
 // previousTodo.unshift(d)
@@ -19,19 +20,30 @@ const initialTodoList = [
 // setTodoList(nextTodo);
 
 function App() {
-  const [todoList, setTodoList] = useState(initialTodoList);
+  const [todoList, setTodoList] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [searchStatus, setSearchStatus] = useState('');
 
+  useEffect(() => {
+    axios.get('http://localhost:8080/todos').then(res => {
+      console.log(res.data);
+      setTodoList(res.data.todos);
+    });
+  }, []);
+
   const createTodo = title => {
-    const nextTodo = [
-      { id: uuidv4(), title: title, completed: false },
-      ...todoList
-    ];
-    setTodoList(nextTodo);
+    axios
+      .post('http://localhost:8080/todos', { title: title, completed: false })
+      .then(res => {
+        console.log(res.data);
+        const nextTodo = [res.data.todo, ...todoList];
+        setTodoList(nextTodo);
+      });
   };
 
-  const deleteTodo = id => {
+  const deleteTodo = async id => {
+    const res = await axios.delete(`http://localhost:8080/todos/${id}`);
+    console.log(res.data);
     const idx = todoList.findIndex(item => item.id === id);
     const newTodoList = [...todoList];
     if (idx !== -1) {
@@ -45,8 +57,13 @@ function App() {
     const newTodoList = [...todoList];
     if (idx !== -1) {
       newTodoList[idx] = { ...newTodoList[idx], ...value };
+      axios
+        .put(`http://localhost:8080/todos/${id}`, newTodoList[idx])
+        .then(res => {
+          console.log(res.data);
+          setTodoList(newTodoList);
+        });
     }
-    setTodoList(newTodoList);
   };
 
   const pendingTodoList = todoList.filter(item => !item.completed);

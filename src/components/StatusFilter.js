@@ -1,8 +1,4 @@
-function StatusFilter(props) {
-  const handleChange = e => {
-    const value = e.target.value;
-    props.setSearchStatus(!value ? value : value === 'true');
-  };
+function StatusFilter() {
   return (
     <div className="btn-group ms-3">
       <input
@@ -11,7 +7,6 @@ function StatusFilter(props) {
         id="all"
         name="status"
         defaultChecked
-        onChange={handleChange}
         value=""
       />
       <label className="btn btn-outline-secondary rounded-0" htmlFor="all">
@@ -23,7 +18,6 @@ function StatusFilter(props) {
         id="done"
         name="status"
         value="true"
-        onChange={handleChange}
       />
       <label className="btn btn-outline-secondary rounded-0" htmlFor="done">
         <i className="fas fa-clipboard-check" />
@@ -34,7 +28,6 @@ function StatusFilter(props) {
         id="doing"
         name="status"
         value="false"
-        onChange={handleChange}
       />
       <label className="btn btn-outline-secondary rounded-0" htmlFor="doing">
         <i className="far fa-clipboard" />

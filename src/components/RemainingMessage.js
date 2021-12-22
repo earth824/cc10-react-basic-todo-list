@@ -1,7 +1,7 @@
-function RemainingMessage({ remaining, total }) {
+function RemainingMessage() {
   return (
     <div className="mt-4 py-3 text-center bg-dark text-white">
-      {remaining} of {total} Remaining
+      1 of 2 Remaining
     </div>
   );
 }

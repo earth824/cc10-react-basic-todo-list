@@ -1,26 +1,24 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { TodoListContext } from '../contexts/TodoListContext';
 
-function EditTodo({ closeEditForm, todoItem: { id, title }, updateTodo }) {
-  const [input, setInput] = useState(title);
-  const [error, setError] = useState('');
+function EditTodo({ cancelEdit, title: oldTitle, id }) {
+  const [title, setTitle] = useState(oldTitle);
+  const { updateTodo } = useContext(TodoListContext);
 
-  const handleSubmit = e => {
+  const handleSubmitForm = e => {
     e.preventDefault();
-    if (input === '') {
-      return setError('Title is required.');
-    }
-    updateTodo(id, { title: input });
-    closeEditForm();
+    updateTodo(id, { title });
+    cancelEdit();
   };
 
   return (
-    <form className="flex-grow-1" onSubmit={handleSubmit}>
+    <form className="flex-grow-1" onSubmit={handleSubmitForm}>
       <div className="input-group">
         <input
           type="text"
-          className={`form-control rounded-0 ${error ? 'is-invalid' : ''}`}
-          value={input}
-          onChange={e => setInput(e.target.value)}
+          className={`form-control rounded-0`}
+          value={title}
+          onChange={e => setTitle(e.target.value)}
         />
         <button className="btn btn-primary rounded-0">
           <i className="far fa-edit" />
@@ -28,11 +26,10 @@ function EditTodo({ closeEditForm, todoItem: { id, title }, updateTodo }) {
         <button
           className="btn btn-danger rounded-0"
           type="button"
-          onClick={closeEditForm}
+          onClick={() => cancelEdit()}
         >
           <i className="fas fa-times" />
         </button>
-        {error && <div className="invalid-feedback">{error}</div>}
       </div>
     </form>
   );

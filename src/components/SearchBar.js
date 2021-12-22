@@ -1,17 +1,11 @@
 import TextFilter from './TextFilter';
 import StatusFilter from './StatusFilter';
 
-function SearchBar(props) {
+function SearchBar() {
   return (
     <div className="mt-4 d-flex">
-      <TextFilter
-        setSearchText={props.setSearchText}
-        searchText={props.searchText}
-      />
-      <StatusFilter
-        setSearchStatus={props.setSearchStatus}
-        searchStatus={props.searchStatus}
-      />
+      <TextFilter />
+      <StatusFilter />
     </div>
   );
 }

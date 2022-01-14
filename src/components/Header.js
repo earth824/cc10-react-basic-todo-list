@@ -3,7 +3,13 @@ import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 
 function Header() {
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
+
+  const handleClickLogout = e => {
+    e.preventDefault();
+    logout();
+  };
+
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-success">
       <div className="container-fluid">
@@ -17,7 +23,7 @@ function Header() {
                 <NavLink className="nav-link" to="/">
                   Home
                 </NavLink>
-                <a className="nav-link" href="/">
+                <a className="nav-link" href="/" onClick={handleClickLogout}>
                   Logout
                 </a>
               </>

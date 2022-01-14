@@ -1,14 +1,7 @@
-import { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
 
 function Header() {
-  const { user, logout } = useContext(AuthContext);
-
-  const handleClickLogout = e => {
-    e.preventDefault();
-    logout();
-  };
+  const handleClickLogout = e => {};
 
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-success">
@@ -18,25 +11,25 @@ function Header() {
         </Link>
         <div className="collapse navbar-collapse justify-content-end">
           <div className="navbar-nav">
-            {user ? (
-              <>
-                <NavLink className="nav-link" to="/">
-                  Home
-                </NavLink>
-                <a className="nav-link" href="/" onClick={handleClickLogout}>
-                  Logout
-                </a>
-              </>
-            ) : (
-              <>
-                <NavLink className="nav-link" to="/login">
-                  Login
-                </NavLink>
-                <NavLink className="nav-link" to="/register">
-                  Register
-                </NavLink>
-              </>
-            )}
+            {/* {user ? ( */}
+            <>
+              <NavLink className="nav-link" to="/">
+                Home
+              </NavLink>
+              <a className="nav-link" href="/" onClick={handleClickLogout}>
+                Logout
+              </a>
+            </>
+            {/* ) : ( */}
+            <>
+              <NavLink className="nav-link" to="/login">
+                Login
+              </NavLink>
+              <NavLink className="nav-link" to="/register">
+                Register
+              </NavLink>
+            </>
+            {/* )} */}
           </div>
         </div>
       </div>

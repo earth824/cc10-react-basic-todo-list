@@ -1,21 +1,16 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import axios from '../config/axios';
-import { AuthContext } from '../contexts/AuthContext';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const { login } = useContext(AuthContext);
-
   const handleSubmitLogin = e => {
     e.preventDefault();
     axios
       .post('/auth/login', { username, password })
-      .then(res => {
-        login(res.data.token);
-      })
+      .then(res => {})
       .catch(err => {
         console.log(err);
         setError('Invalid username or password.');

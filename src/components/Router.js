@@ -1,6 +1,5 @@
-import { useContext } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
+
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 
@@ -25,8 +24,7 @@ const routes = {
 };
 
 function Router() {
-  const { user } = useContext(AuthContext);
-  const role = user ? 'user' : 'guest';
+  const role = 'guest';
   return (
     // <Routes>
     //   {user ? (
